@@ -1,12 +1,14 @@
 var app = angular.module("demo", []);
 
 app.controller("AppCtrl", function($scope, $http){
-
+    var time = performance.now();
     /******************************BuyerHasMedicinesCRUD*************************/
     $scope.buyer_has_medicines = [];
     $http.get('/api/buyer_has_medicines').then(function (response){
         $scope.buyer_has_medicines = response.data;
         console.log(response);
+        time = performance.now() - time;
+        window.alert(time);
     });
 
     this.del_buyer_has_medicines = function del(id) {
