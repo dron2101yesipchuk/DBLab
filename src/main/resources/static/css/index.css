@@ -4,7 +4,7 @@ body {
     background: #fff;
     overflow: auto;
     font-size: 30px;
-    color: #7f6040;
+    color: #8992bc;
 }
 
 .datagrid table {
@@ -25,7 +25,7 @@ body {
 }
 
 .datagrid table thead th {
-    background: #e87a30;
+    background: #aeaffa;
     color: #0f0f0f;
     font-size: 18px;
     font-weight: bold;
@@ -45,7 +45,7 @@ body {
 
 
 .datagrid table tbody tr:nth-child(even) {
-    background: #ff993d;
+    background: #d5d4ff;
     /*background: #fff5d8;*/
     color: #0f0f0f;
 }
@@ -85,4 +85,44 @@ body {
 .btn-del:hover {
     background: #ff0000;
     text-decoration: none;
+}
+
+.my-th-selected {
+    width: 50px;
+    text-align: center;
+    font-size:14px;
+    border: 2px solid #3c4465;
+    background: #a4a1ff;
+    /*background: #fff5d8;*/
+    color: #ffffff;
+}
+.my-th {
+    width: 50px;
+    text-align: center;
+    font-size:14px;
+    border: 2px solid #3a3386;
+    background: #807cd6;
+    /*background: #fff5d8;*/
+    color: #ffffff;
+}
+
+.my-th-clicked {
+    width: 50px;
+    text-align: center;
+    font-size:14px;
+    border: 2px solid #3a3386;
+    background: #9791d6;
+    /*background: #fff5d8;*/
+    color: #ffffff;
+}
+
+.my-th:hover{
+    background: #8a66ed;
+}
+
+a {
+    color: #ffffff;
+}
+href:hover {
+    color: #dbd5ff;
 }
