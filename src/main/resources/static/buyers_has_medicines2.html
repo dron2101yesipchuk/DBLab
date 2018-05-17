@@ -75,8 +75,8 @@
                     <th style="width: 100px; padding-left: 3px">ПІБ доктора</th>
                     <th style="width: 90px; padding-left: 3px">Діагноз</th>
                     <th style="width: 40px; padding-left: 5px">К-сть</th>
-                    <th style="width: 90px">
-                        <button style="width: 90px" type="button" class="btn btn-success"
+                    <th style="width: 85px">
+                        <button style="width: 85px" type="button" class="btn btn-succ"
                                 data-toggle="modal" data-target="#addModal"
                                 ng-click="ctrl.start_insert_buyer_has_medicines()"
                     >Add</button></th>
@@ -96,12 +96,12 @@
                     <td style="padding-left: 3px">{{item.doctorPIB}}</td>
                     <td style="padding-left: 3px">{{item.diagnosis}}</td>
                     <td style="padding-left: 5px">{{item.amountOfMedicine}}</td>
-                    <td ><button type="button" class="btn btn-warning"
+                    <td ><button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
                                 ng-click="ctrl.start_update_buyer_has_medicines(item.id, item.doctorPIB,
                                 item.diagnosis, item.amountOfMedicine)"
                     >Update</button>
-                        <button type="button" class="btn btn-danger"
+                        <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_buyer_has_medicines(item.id)"
                         >Delete</button></td>
 

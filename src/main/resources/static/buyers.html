@@ -68,8 +68,8 @@
                     <th style="width: 30px; padding-left: 3px">id</th>
                     <th style="padding-left: 3px">ПІБ</th>
                     <th style="width: 40px; padding-left: 5px">Вік</th>
-                    <th style="width: 95px">
-                        <button style="width: 95px" type="button" class="btn btn-success"
+                    <th style="width: 85px">
+                        <button style="width: 85px" type="button" class="btn btn-succ"
                                 data-toggle="modal" data-target="#addModal"
                     >Add</button>
                     </th>
@@ -82,14 +82,13 @@
                     <td style=" padding-left: 3px">{{item.id}}</td>
                     <td style="padding-left: 3px">{{item.pib}}</td>
                     <td style="padding-left: 5px">{{item.age}}</td>
-                    <td ><button style="padding: -1px"
-                            type="button" class="btn btn-warning"
+                    <td ><button
+                            type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
                                 ng-click="ctrl.start_update_buyer(item.id, item.pib, item.age)"
                     >Update</button>
-                        <button style="padding: -1px"
-                                type="button" class="btn btn-danger"
-                                ng-click="ctrl.del_buyer(item.id)"
+                        <button
+                                type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"                               ng-click="ctrl.del_buyer(item.id)"
                         >Delete</button>
                     </td>
 

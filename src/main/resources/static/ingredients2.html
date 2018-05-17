@@ -71,8 +71,8 @@
                     <th style="width: 150px; padding-left: 3px">Критична норма</th>
                     <th style="width: 50px; padding-left: 3px">К-сть</th>
                     <th style="width: 50px; padding-left: 3px">Ціна</th>
-                    <th style="width: 95px">
-                        <button style="width: 95px" type="button" class="btn btn-success"
+                    <th style="width: 85px">
+                        <button style="width: 85px" type="button" class="btn btn-succ"
                                 data-toggle="modal" data-target="#addModal"
                     >Add</button></th>
 
@@ -88,11 +88,11 @@
                     <td style="padding-left: 3px">{{item.amount}}</td>
                     <td style="padding-left: 3px">{{item.price}}</td>
                     <td>
-                        <button type="button" class="btn btn-warning"
+                        <button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
                                 ng-click="ctrl.start_update_ingredients(item.id)"
                     >Update</button>
-                        <button type="button" class="btn btn-danger"
+                        <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_ingredients(item.id)"
                         >Delete</button></td>
 

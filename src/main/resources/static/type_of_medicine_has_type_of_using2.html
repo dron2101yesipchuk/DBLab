@@ -44,7 +44,7 @@
                         <a href="\order_status2.html" style="color:white;">Статус замовлення</a>
                     </th>
                     <th class = "my-th" style="width:50px">
-                        <a href="\type_of_medicine2.html"style="color:white;">Тип медикаменту</a>
+                        <a href="\type_of_medicine2.html" style="color:white;">Тип медикаменту</a>
                     </th>
                     <th class = "my-th-clicked" style="width:50px">
                         <a href="\type_of_medicine_has_type_of_using2.html" style="color:white;">Медикамент-Використання</a>
@@ -68,8 +68,8 @@
                     <th style="width: 30px; padding-left: 3px">id</th>
                     <th style="padding-left: 3px">Тип медикаменту</th>
                     <th style="padding-left: 3px">Тип використання</th>
-                    <th style="width: 95px">
-                        <button style="width: 95px" type="button" class="btn btn-success"
+                    <th style="width: 85px">
+                        <button style="width: 85px" type="button" class="btn btn-succ"
                                 data-toggle="modal" data-target="#addModal"
                                 ng-click="ctrl.start_insert_type_of_medicine_has_type_of_using()"
                     >Add</button></th>
@@ -83,11 +83,11 @@
                     <td style="padding-left: 3px">{{item.id}}</td>
                     <td style="padding-left: 3px">{{item.typeOfMedicine.nameOfType}}</td>
                     <td style="padding-left: 3px">{{item.typeOfUsing.nameOfType}}</td>
-                    <td><button type="button" class="btn btn-warning"
+                    <td><button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
                                 ng-click="ctrl.start_update_type_of_medicine_has_type_of_using(item.id)"
                     >Update</button>
-                        <button type="button" class="btn btn-danger"
+                        <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_type_of_medicine_has_type_of_using(item.id)"
                         >Delete</button></td>
 

@@ -77,13 +77,50 @@ body {
     font-family: Georgia;
     color: #ffffff;
     font-size: 20px;
-    background: #c71818;
+    background: #d78b8c;
     padding: 10px 20px 10px 20px;
     text-decoration: none;
 }
 
-.btn-del:hover {
-    background: #ff0000;
+.btn-dang{
+    border-color: #c8665c;
+    background: #d7645d;
+}
+
+.btn-dang:hover {
+    border-color: #c8665c;
+    background: #ff908e;
+    text-decoration: none;
+}
+
+.btn-dang:active {
+    height: 20px;
+    width: 50px;
+    border-color: #c8665c;
+    background: #ff908e;
+    text-decoration: none;
+}
+
+.btn-succ{
+    border-color: #11bf62;
+    background: #11d77a;
+}
+
+.btn-succ:hover {
+    border-color: #11bf62;
+    background: #33e3a3;
+    text-decoration: none;
+}
+
+.btn-warn{
+    border-color: #1b71ec;
+    background: #2a88fa;
+    color:white;
+}
+
+.btn-warn:hover {
+    border-color: #1b71ec;
+    background: #4491ff;
     text-decoration: none;
 }
 

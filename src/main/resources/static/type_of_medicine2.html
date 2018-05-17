@@ -70,8 +70,8 @@
                     <th style="padding-left: 3px">Назва типу</th>
                     <th style="padding-left: 3px">Загальний тип</th>
                     <th style="padding-left: 3px">Тип виготовлення</th>
-                    <th style="width: 95px">
-                        <button style="width: 95px" type="button" class="btn btn-success"
+                    <th style="width: 85px">
+                        <button style="width: 85px" type="button" class="btn btn-succ"
                                 data-toggle="modal" data-target="#addModal"
                                 ng-click="ctrl.start_insert_type_of_medicine()"
                     >Add</button></th>
@@ -86,11 +86,11 @@
                     <td style="padding-left: 3px">{{item.nameOfType}}</td>
                     <td style="padding-left: 3px">{{item.generalType.nameOfGeneralType}}</td>
                     <td style="padding-left: 3px">{{item.typeOfProduction.nameOfType}}</td>
-                    <td><button type="button" class="btn btn-warning"
+                    <td><button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
                                 ng-click="ctrl.start_update_type_of_medicine(item.id, item.nameOfType)"
                     >Update</button>
-                        <button type="button" class="btn btn-danger"
+                        <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_type_of_medicine(item.id)"
                         >Delete</button></td>
 
