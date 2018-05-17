@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Buyer;
 import com.example.demo.model.BuyersHasMedicines;
+import com.example.demo.model.MedicineHasIngredients;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -97,6 +98,13 @@ public class RequestController {
         return allMostPopularMedicines;
     }
 
+    @RequestMapping("/request4")
+    List<MedicineHasIngredients> getVolumeOfIngredientsBetweenSelectedDates(
+            @RequestParam Date firstDate, Date secondDate){
+        return medicineHasIngredientsRepository.
+                getVolumeOfIngredientsBetweenSelectedDates(firstDate, secondDate);
+    }
+
     @RequestMapping("/request5_all_buyers_amount")
     Integer getAmountOfBuyersThatOrderSelectedMedicineBetweenSelectedDates
             (@RequestParam String nameOfMedicine,Date firstDate,Date secondDate){
@@ -139,6 +147,27 @@ public class RequestController {
         return buyerHasMedicinesRepository.getListOfOrdersThatAreMakingNow();
     }
 
+    @RequestMapping("/request9_list")
+    List<MedicineHasIngredients> getListOfIngredientsOfMedicinesThatAreMaking(){
+        return medicineHasIngredientsRepository.getListOfIngredientsOfMedicinesThatAreMaking(
+                "Виготовляється"
+        );
+    }
+
+    @RequestMapping("/request9_amount")
+    Integer getAmountOfIngredientsOfMedicinesThatAreMaking(){
+        return medicineHasIngredientsRepository.getAmountOfIngredientsOfMedicinesThatAreMaking(
+                "Виготовляється"
+        );
+    }
+
+    @RequestMapping("/request10_made_medicines")
+    List<MedicineHasIngredients> getListOfVolumeAndPriceOfIngredientsOfMedicinesThatMakeInDrugstore(
+            @RequestParam String nameOfMedicine){
+        return medicineHasIngredientsRepository.getListOfVolumeAndPriceOfIngredientsOfMedicinesThatMakeInDrugstore(
+                nameOfMedicine);
+    }
+
     @RequestMapping("/request11_all")
     List<BuyersHasMedicines> getListOfBuyersThatBuyMostOften(){
         List<BuyersHasMedicines> buyersHasMedicines =
@@ -175,6 +204,4 @@ public class RequestController {
         }
         return buyersHasMedicines;
     }
-
-
 }
