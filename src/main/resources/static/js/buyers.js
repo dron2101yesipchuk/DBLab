@@ -57,7 +57,7 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ][а-яі]+\s?[А-ЯІ][а-яі]+$/ ;
+        var regexName=/^[А-ЯІЄ][а-яіє]+\s[А-ЯІЄ][а-яіє]+\s?[А-ЯІЄ][а-яіє]+$/ ;
         var regexAge=/^1[6-9]|[2-9][0-9]$/ ;
         if(!regexName.test(pib.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
