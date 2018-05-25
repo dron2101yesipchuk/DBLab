@@ -36,14 +36,24 @@ app.controller("AppCtrl", function($scope, $http){
         var dateOfOrdering = document.getElementById("dateOfOrdering").value;
         var dateOfReceiving = document.getElementById("dateOfReceiving").value;
         var indexOfOrderStatus = document.getElementById("orderStatusID").selectedIndex;
-        var orderStatus = document.getElementById("orderStatusID").options[indexOfOrderStatus].value
+        var orderStatus = document.getElementById("orderStatusID").options[indexOfOrderStatus].value;
 
-        $http.get('/api/dates/add?id='+id+'&dateOfOrdering='+dateOfOrdering+'&dateOfReceiving='
-            +dateOfReceiving+'&orderStatus_id='+orderStatus).then(function (response){
-            setTimeout(function(){
-                window.location.reload();
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        if(!regex.test(dateOfOrdering.toString())||!regex.test(dateOfReceiving.toString())){
+            errorMessage=errorMessage+'-невірний формат дати;\n';
+            errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/dates/add?id='+id+'&dateOfOrdering='+dateOfOrdering+'&dateOfReceiving='
+                +dateOfReceiving+'&orderStatus_id='+orderStatus).then(function (response){
+                setTimeout(function(){
+                    window.location.reload();
+                });
             });
-        });
+        }else window.alert(errorMessage);
     };
 
     var idDates;
@@ -70,13 +80,25 @@ app.controller("AppCtrl", function($scope, $http){
         var dateOfOrdering = document.getElementById("dateOfOrderingUPD").value;
         var dateOfReceiving = document.getElementById("dateOfReceivingUPD").value;
         var indexOfOrderStatus = document.getElementById("orderStatusIDUPD").selectedIndex;
-        var orderStatus = document.getElementById("orderStatusIDUPD").options[indexOfOrderStatus].value
+        var orderStatus = document.getElementById("orderStatusIDUPD").options[indexOfOrderStatus].value;
 
-        $http.get('/api/dates/upd?id='+idDates+'&dateOfOrdering='+dateOfOrdering+'&dateOfReceiving='
-            +dateOfReceiving+'&orderStatus_id='+orderStatus).then(function (response){
-            setTimeout(function(){
-                window.location.reload();
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        if(!regex.test(dateOfOrdering.toString())||!regex.test(dateOfReceiving.toString())){
+            errorMessage=errorMessage+'-невірний формат дати;\n';
+            errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/dates/upd?id='+idDates+'&dateOfOrdering='+dateOfOrdering+'&dateOfReceiving='
+                +dateOfReceiving+'&orderStatus_id='+orderStatus).then(function (response){
+                setTimeout(function(){
+                    window.location.reload();
+                });
             });
-        });
+        }else window.alert(errorMessage);
+
+
     };
 });

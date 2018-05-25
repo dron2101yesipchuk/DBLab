@@ -18,9 +18,20 @@ app.controller("AppCtrl", function($scope, $http){
         var id = document.getElementById("orderStatusId").value;
         var name = document.getElementById("orderStatusName").value;
 
-        $http.get('/api/order_status/add?id='+id+'&nameOfStatus='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/order_status/add?id='+id+'&nameOfStatus='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idOrderStatus;
@@ -31,8 +42,21 @@ app.controller("AppCtrl", function($scope, $http){
     this.update_order_status = function upd() {
         var name = document.getElementById("orderStatusNameUPD").value;
 
-        $http.get('/api/order_status/upd?id='+idOrderStatus+'&nameOfStatus='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/order_status/upd?id='+idOrderStatus+'&nameOfStatus='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
+
+
     };
 });

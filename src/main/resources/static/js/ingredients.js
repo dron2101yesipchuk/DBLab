@@ -22,10 +22,33 @@ app.controller("AppCtrl", function($scope, $http){
         var amount = document.getElementById("ingredientsAmount").value;
         var price = document.getElementById("ingredientsPrice").value;
 
-        $http.get('/api/ingredients/add?id='+id+'&name='+name+'&criticalRate='+criticalRate+
-        '&amount='+amount+'&price='+price).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)$/ ;
+        var regexInt=/^[0-9]+$/ ;
+        var regexDouble=/^([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if(!regexInt.test(criticalRate.toString())||!regexInt.test(amount.toString())){
+            errorMessage=errorMessage+'-невірний формат цілого числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: ціле число;';
+            isValid=false;
+        }
+        if(!regexDouble.test(price.toString())){
+            errorMessage=errorMessage+'-невірний формат дробового числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: дробове число;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/ingredients/add?id='+id+'&name='+name+'&criticalRate='+criticalRate+
+                '&amount='+amount+'&price='+price).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idIngredients;
@@ -39,9 +62,32 @@ app.controller("AppCtrl", function($scope, $http){
         var amount = document.getElementById("ingredientsAmountUPD").value;
         var price = document.getElementById("ingredientsPriceUPD").value;
 
-        $http.get('/api/ingredients/upd?id='+idIngredients+'&name='+name+'&criticalRate='+criticalRate+
-            '&amount='+amount+'&price='+price).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)$/ ;
+        var regexInt=/^[0-9]+$/ ;
+        var regexDouble=/^([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if(!regexInt.test(criticalRate.toString())||!regexInt.test(amount.toString())){
+            errorMessage=errorMessage+'-невірний формат цілого числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: ціле число;';
+            isValid=false;
+        }
+        if(!regexDouble.test(price.toString())){
+            errorMessage=errorMessage+'-невірний формат дробового числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: дробове число;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/ingredients/upd?id='+idIngredients+'&name='+name+'&criticalRate='+criticalRate+
+                '&amount='+amount+'&price='+price).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 });

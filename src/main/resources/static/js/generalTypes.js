@@ -19,9 +19,20 @@ app.controller("AppCtrl", function($scope, $http){
         var id = document.getElementById("generalTypeId").value;
         var name = document.getElementById("generalTypeName").value;
 
-        $http.get('/api/general_types/add?id='+id+'&generalType='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^[А-ЯІ][а-яі]+$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат типу;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/general_types/add?id='+id+'&generalType='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idGenType;
@@ -32,8 +43,21 @@ app.controller("AppCtrl", function($scope, $http){
     this.update_general_type = function upd() {
         var name = document.getElementById("generalTypeNameUPD").value;
 
-        $http.get('/api/general_types/upd?id='+idGenType+'&generalType='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат типу;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/general_types/upd?id='+idGenType+'&generalType='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
+
+
     };
 });

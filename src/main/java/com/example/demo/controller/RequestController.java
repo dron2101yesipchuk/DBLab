@@ -1,46 +1,32 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Buyer;
+import com.example.demo.model.Requests.Amount;
 import com.example.demo.model.BuyersHasMedicines;
+import com.example.demo.model.Medicine;
 import com.example.demo.model.MedicineHasIngredients;
+import com.example.demo.model.Requests.BuyerHasMedicinesAndAmount;
+import com.example.demo.model.Requests.IngredientsAndVolume;
+import com.example.demo.model.Requests.MadeMedicineAndPrice;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class RequestController {
     @Autowired
-    BuyerRepository buyerRepository;
-    @Autowired
     BuyerHasMedicinesRepository buyerHasMedicinesRepository;
-    @Autowired
-    DatesRepository datesRepository;
-    @Autowired
-    GeneralTypesRepository generalTypesRepository;
-    @Autowired
-    IngredientsRepository ingredientsRepository;
     @Autowired
     MedicineHasIngredientsRepository medicineHasIngredientsRepository;
     @Autowired
     MedicineRepository medicineRepository;
-    @Autowired
-    OrderStatusRepository orderStatusRepository;
-    @Autowired
-    TypeOfMedicineHasTypeOfUsingRepository typeOfMedicineHasTypeOfUsingRepository;
-    @Autowired
-    TypeOfMedicineRepository typeOfMedicineRepository;
-    @Autowired
-    TypeOfProductionRepository typeOfProductionRepository;
-    @Autowired
-    TypeOfUsingRepository typeOfUsingRepository;
 
     @RequestMapping("/request1_1")
     List<BuyersHasMedicines> getBuyerThatDidntComeForMedicine(){
@@ -48,98 +34,198 @@ public class RequestController {
     }
 
     @RequestMapping("/request1_2")
-    Integer getAmountOfBuyerThatDidntComeForMedicine(){
-        return buyerHasMedicinesRepository.getAmountOfBuyerThatDidntComeForMedicine();
+    Amount getAmountOfBuyerThatDidntComeForMedicine(){
+        return new Amount(buyerHasMedicinesRepository.getAmountOfBuyerThatDidntComeForMedicine());
     }
 
+    /*******************************************************************************/
     @RequestMapping("/request2_list_all")
     List<BuyersHasMedicines> getAllBuyersThatWaitingForMedicines(){
         return buyerHasMedicinesRepository.getAllBuyersThatWaitingForMedicines();
     }
 
     @RequestMapping("/request2_amount_all")
-    Integer getAmountOfAllBuyersThatWaitingForMedicines(){
-        return buyerHasMedicinesRepository.getAmountOfAllBuyersThatWaitingForMedicines();
+    Amount getAmountOfAllBuyersThatWaitingForMedicines(){
+        return new Amount(buyerHasMedicinesRepository.getAmountOfAllBuyersThatWaitingForMedicines());
     }
 
     @RequestMapping("/request2_list_selected_type")
-    List<BuyersHasMedicines> getBuyersThatWaitingForMedicinesOfSelectedType(@RequestParam String nameOfType){
+    List<BuyersHasMedicines> getBuyersThatWaitingForMedicinesOfSelectedType(@RequestParam Integer id){
         return buyerHasMedicinesRepository.
-                getBuyersThatWaitingForMedicinesOfSelectedType(nameOfType);
+                getBuyersThatWaitingForMedicinesOfSelectedType(id);
     }
 
     @RequestMapping("/request2_amount_selected_type")
-    Integer getAmountOfBuyersThatWaitingForMedicinesOfSelectedType(@RequestParam String nameOfType){
-        return buyerHasMedicinesRepository.
-                getAmountOfBuyersThatWaitingForMedicinesOfSelectedType(nameOfType);
+    Amount getAmountOfBuyersThatWaitingForMedicinesOfSelectedType(@RequestParam Integer id){
+        return new Amount(buyerHasMedicinesRepository.
+                getAmountOfBuyersThatWaitingForMedicinesOfSelectedType(id));
     }
 
+    /*******************************************************************************/
     @RequestMapping("/request3_all")
-    List<BuyersHasMedicines> getAllTheMostPopularMedicines(){
+    List<BuyerHasMedicinesAndAmount> getAllTheMostPopularMedicines(){
         List<BuyersHasMedicines> allMostPopularMedicines =
-                buyerHasMedicinesRepository.getAllTheMostPopularMedicines();
-        for (int i = 0; i < allMostPopularMedicines.size(); i++)
-            if(i>9) {
-                allMostPopularMedicines.remove(i);
-                i--;
-            }
-        return allMostPopularMedicines;
+                buyerHasMedicinesRepository.getAllTheMostPopularMedicinesList();
+
+        List<Long> allMostPopularMedicinesAmount =
+                buyerHasMedicinesRepository.getAllTheMostPopularMedicinesAmount();
+
+        List<BuyerHasMedicinesAndAmount> buyerHasMedicinesAndAmount = new ArrayList<>();
+        for (int i = 0; i < 10; i++){
+            buyerHasMedicinesAndAmount.add(
+                    new BuyerHasMedicinesAndAmount(allMostPopularMedicines.get(i),
+                            allMostPopularMedicinesAmount.get(i)));
+        }
+            
+        return buyerHasMedicinesAndAmount;
     }
 
     @RequestMapping("/request3_type")
-    List<BuyersHasMedicines> getTheMostPopularMedicinesOfSelectedType(@RequestParam String nameOfType){
+    List<BuyerHasMedicinesAndAmount> getTheMostPopularMedicinesOfSelectedType(@RequestParam Integer id){
         List<BuyersHasMedicines> allMostPopularMedicines =
-                buyerHasMedicinesRepository.getTheMostPopularMedicinesOfSelectedType(nameOfType);
-        for (int i = 0; i < allMostPopularMedicines.size(); i++)
-            if(i>9) {
-                allMostPopularMedicines.remove(i);
-                i--;
-            }
-        return allMostPopularMedicines;
+                buyerHasMedicinesRepository.getTheMostPopularMedicinesOfSelectedType(id);
+
+        List<Long> allMostPopularMedicinesAmount =
+                buyerHasMedicinesRepository.getTheMostPopularMedicinesOfSelectedTypeAmount(id);
+
+        List<BuyerHasMedicinesAndAmount> buyerHasMedicinesAndAmount = new ArrayList<>();
+        for (int i = 0; i < allMostPopularMedicines.size(); i++){
+            buyerHasMedicinesAndAmount.add(
+                    new BuyerHasMedicinesAndAmount(allMostPopularMedicines.get(i),
+                            allMostPopularMedicinesAmount.get(i)));
+        }
+
+        return buyerHasMedicinesAndAmount;
     }
 
+    /*******************************************************************************/
     @RequestMapping("/request4")
-    List<MedicineHasIngredients> getVolumeOfIngredientsBetweenSelectedDates(
+    List<IngredientsAndVolume> getVolumeOfIngredientsBetweenSelectedDates(
             @RequestParam Date firstDate, Date secondDate){
-        return medicineHasIngredientsRepository.
-                getVolumeOfIngredientsBetweenSelectedDates(firstDate, secondDate);
+        List<MedicineHasIngredients> ingredients =
+                medicineHasIngredientsRepository.getIngredientsBetweenSelectedDates(
+                        firstDate, secondDate) ;
+
+        List<Long> volumes =
+                medicineHasIngredientsRepository.getVolumeOfIngredientsBetweenSelectedDates(
+                        firstDate, secondDate) ;
+
+        List<IngredientsAndVolume> ingredientsAndVolumes = new ArrayList<>();
+        for(int i = 0; i < ingredients.size(); i++){
+            ingredientsAndVolumes.add(
+                    new IngredientsAndVolume(
+                            ingredients.get(i), volumes.get(i))
+            );
+        }
+
+
+        return ingredientsAndVolumes;
     }
 
+    /*******************************************************************************/
     @RequestMapping("/request5_all_buyers_amount")
     Integer getAmountOfBuyersThatOrderSelectedMedicineBetweenSelectedDates
-            (@RequestParam String nameOfMedicine,Date firstDate,Date secondDate){
+            (@RequestParam Integer id,Date firstDate,Date secondDate){
         return buyerHasMedicinesRepository
                 .getAmountOfBuyersThatOrderSelectedMedicineBetweenSelectedDates(
-                        nameOfMedicine, firstDate, secondDate);
+                        id, firstDate, secondDate);
     }
 
     @RequestMapping("/request5_all_buyers_list")
     List<BuyersHasMedicines> getListOfBuyersThatOrderSelectedMedicineBetweenSelectedDates
-            (@RequestParam String nameOfMedicine, Date firstDate, Date secondDate){
+            (@RequestParam Integer id, Date firstDate, Date secondDate){
         return buyerHasMedicinesRepository.getListOfBuyersThatOrderSelectedMedicineBetweenSelectedDates(
-                nameOfMedicine, firstDate, secondDate
+                id, firstDate, secondDate
         );
     }
 
     @RequestMapping("/request5_medicine_type_buyers_amount")
     Integer getAmountOfBuyersThatOrderSelectedTypeOfMedicineBetweenSelectedDates
-            (@RequestParam String nameOfType, Date firstDate, Date secondDate){
+            (@RequestParam Integer id, Date firstDate, Date secondDate){
         return buyerHasMedicinesRepository.getAmountOfBuyersThatOrderSelectedTypeOfMedicineBetweenSelectedDates(
-                nameOfType, firstDate, secondDate
+                id, firstDate, secondDate
         );
     }
 
     @RequestMapping("/request5_medicine_type_buyers_list")
     List<BuyersHasMedicines> getListOfBuyersThatOrderSelectedTypeOfMedicineBetweenSelectedDates
-            (@RequestParam String nameOfType, Date firstDate, Date secondDate){
+            (@RequestParam Integer id, Date firstDate, Date secondDate){
         return buyerHasMedicinesRepository.getListOfBuyersThatOrderSelectedTypeOfMedicineBetweenSelectedDates(
-                nameOfType, firstDate, secondDate
+                id, firstDate, secondDate
         );
     }
 
+    /*******************************************************************************/
+    @RequestMapping("/request6_medicine_critical_rate")
+    List<Medicine> getListOfMedicineThatHaveReachedCriticalRate(){
+        return medicineRepository.getListOfMedicineThatHaveReachedCriticalRate("Рецепт%");
+    }
+
+    @RequestMapping("/request6_type_of_medicine_critical_rate")
+    List<Medicine> getListOfTypesOfMedicineThatHaveReachedCriticalRate(){
+        return medicineRepository.getListOfTypesOfMedicineThatHaveReachedCriticalRate("Рецепт%");
+    }
+
+    private Calendar today = Calendar.getInstance();
+
+    @RequestMapping("/request6_medicine_expiration_term")
+    List<Medicine> getListOfMedicineThatExpired(){
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        java.util.Date todayDate = today.getTime();
+
+        List<Medicine> resultList = medicineRepository.getListOfMedicineThatExpired("Рецепт%");
+
+        for(int i = 0; i < resultList.size();i++){
+            Medicine m = resultList.get(i);
+            Integer daysBetweenDates = (
+                    todayDate.getYear()*365+todayDate.getMonth()*30+todayDate.getDay()
+                            -m.getManufactureDate().getYear()*365-m.getManufactureDate().getMonth()*30
+                            -m.getManufactureDate().getDay());
+            Integer expirationTerm = (m.getExpirationTerm()*30);
+            if((daysBetweenDates < expirationTerm)){
+                resultList.remove(m);
+                i--;
+            }
+        }
+
+        return resultList;
+    }
+
+    @RequestMapping("/request6_type_of_medicine_expiration_term")
+    List<Medicine> getListOfTypesOfMedicineThatExpired(){
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        java.util.Date todayDate = today.getTime();
+
+        List<Medicine> resultList = medicineRepository.getListOfTypesOfMedicineThatExpired("Рецепт%");
+
+        for(int i = 0; i < resultList.size();i++){
+            Medicine m = resultList.get(i);
+            Integer daysBetweenDates = (
+                    todayDate.getYear()*365+todayDate.getMonth()*30+todayDate.getDay()
+                            -m.getManufactureDate().getYear()*365-m.getManufactureDate().getMonth()*30
+                            -m.getManufactureDate().getDay());
+            Integer expirationTerm = (m.getExpirationTerm()*30);
+            if((daysBetweenDates < expirationTerm)){
+                resultList.remove(m);
+                i--;
+            }
+        }
+
+        return resultList;
+    }
+
+    /*******************************************************************************/
+    @RequestMapping("/request7")
+    List<Medicine> getListOfMedicineOfSelectedTypeWithMinimalStocks
+            (@RequestParam Integer id){
+        return medicineRepository.getListOfMedicineOfSelectedTypeWithMinimalStocks(
+                id);
+    }
+
+    /*******************************************************************************/
     @RequestMapping("/request8_amount")
-    Integer getAmountOfOrdersThatAreMakingNow(){
-        return buyerHasMedicinesRepository.getAmountOfOrdersThatAreMakingNow();
+    Amount getAmountOfOrdersThatAreMakingNow(){
+        return new Amount(buyerHasMedicinesRepository.getAmountOfOrdersThatAreMakingNow());
     }
 
     @RequestMapping("/request8_list")
@@ -147,6 +233,7 @@ public class RequestController {
         return buyerHasMedicinesRepository.getListOfOrdersThatAreMakingNow();
     }
 
+    /*******************************************************************************/
     @RequestMapping("/request9_list")
     List<MedicineHasIngredients> getListOfIngredientsOfMedicinesThatAreMaking(){
         return medicineHasIngredientsRepository.getListOfIngredientsOfMedicinesThatAreMaking(
@@ -155,53 +242,151 @@ public class RequestController {
     }
 
     @RequestMapping("/request9_amount")
-    Integer getAmountOfIngredientsOfMedicinesThatAreMaking(){
-        return medicineHasIngredientsRepository.getAmountOfIngredientsOfMedicinesThatAreMaking(
+    Amount getAmountOfIngredientsOfMedicinesThatAreMaking(){
+        return new Amount(
+                medicineHasIngredientsRepository.getAmountOfIngredientsOfMedicinesThatAreMaking(
                 "Виготовляється"
-        );
+        ));
     }
 
+    /*******************************************************************************/
     @RequestMapping("/request10_made_medicines")
-    List<MedicineHasIngredients> getListOfVolumeAndPriceOfIngredientsOfMedicinesThatMakeInDrugstore(
-            @RequestParam String nameOfMedicine){
-        return medicineHasIngredientsRepository.getListOfVolumeAndPriceOfIngredientsOfMedicinesThatMakeInDrugstore(
-                nameOfMedicine);
+    List<MadeMedicineAndPrice> getListOfVolumeAndPriceOfIngredientsOfMedicinesThatMakeInDrugstore(
+            @RequestParam Integer id){
+        List<MedicineHasIngredients> medicineHasIngredients =
+                medicineHasIngredientsRepository.getListOfVolumeOfIngredientsOfMedicinesThatMakeInDrugstore(id) ;
+
+        List<Double> prices =
+                medicineHasIngredientsRepository.getListOfPriceOfIngredientsOfMedicinesThatMakeInDrugstore(id) ;
+
+        List<MadeMedicineAndPrice> madeMedicineAndPrices = new ArrayList<>();
+        for(int i = 0; i < medicineHasIngredients.size(); i++){
+            madeMedicineAndPrices.add(
+                    new MadeMedicineAndPrice(
+                            medicineHasIngredients.get(i), prices.get(i))
+            );
+        }
+
+
+        return madeMedicineAndPrices;
     }
 
+    @RequestMapping("/request10_officinal")
+    List<Medicine> getInformationAboutOfficinalMedicine(
+            @RequestParam Integer id){
+        return medicineRepository.getInformationAboutOfficinalMedicine(id);
+    }
+    @RequestMapping("/for_request10_officinal")
+    List<Medicine> getListOfOfficinalMedicine(){
+        return medicineRepository.getListOfOfficinalMedicine("Рецепт%");
+    }
+
+
+    /*******************************************************************************/
     @RequestMapping("/request11_all")
-    List<BuyersHasMedicines> getListOfBuyersThatBuyMostOften(){
+    List<BuyerHasMedicinesAndAmount> getListOfBuyersThatBuyMostOften(){
         List<BuyersHasMedicines> buyersHasMedicines =
                 buyerHasMedicinesRepository.getListOfBuyersThatBuyMostOften() ;
-        for (int i = 1; i < buyersHasMedicines.size(); i++){
-            buyersHasMedicines.remove(i);
-            i--;
+
+        List<Long> buyersHasMedicinesAmount =
+                buyerHasMedicinesRepository.getAmountOfBuyersThatBuyMostOften() ;
+        Long maxAmount = Long.valueOf(0);
+        for (Long l : buyersHasMedicinesAmount){
+            if(l > maxAmount){
+                maxAmount = l;
+            }
         }
-        return buyersHasMedicines;
+
+        List<BuyerHasMedicinesAndAmount> buyerHasMedicinesAndAmount = new ArrayList<>();
+        for(int i = 0; i < buyersHasMedicinesAmount.size(); i++){
+            if(buyersHasMedicinesAmount.get(i).longValue() == maxAmount.longValue()){
+                buyerHasMedicinesAndAmount.add(
+                        new BuyerHasMedicinesAndAmount(
+                                buyersHasMedicines.get(i), buyersHasMedicinesAmount.get(i))
+                );
+            }
+        }
+
+
+        return buyerHasMedicinesAndAmount;
     }
 
     @RequestMapping("/request11_medicine")
-    List<BuyersHasMedicines> getListOfBuyersThatBuySelectedMedicineMostOften(
-            @RequestParam String nameOfMedicine){
+    List<BuyerHasMedicinesAndAmount> getListOfBuyersThatBuySelectedMedicineMostOften(
+            @RequestParam Integer id){
         List<BuyersHasMedicines> buyersHasMedicines =
-                buyerHasMedicinesRepository.
-                        getListOfBuyersThatBuySelectedMedicineMostOften(nameOfMedicine);
-        for (int i = 1; i < buyersHasMedicines.size(); i++){
-            buyersHasMedicines.remove(i);
-            i--;
+                buyerHasMedicinesRepository.getListOfBuyersThatBuySelectedMedicineMostOften(id) ;
+
+        List<Long> buyersHasMedicinesAmount =
+                buyerHasMedicinesRepository.getAmountOfBuyersThatBuySelectedMedicineMostOften(id) ;
+        Long maxAmount = Long.valueOf(0);
+        for (Long l : buyersHasMedicinesAmount){
+            if(l > maxAmount){
+                maxAmount = l;
+            }
         }
-        return buyersHasMedicines;
+
+        List<BuyerHasMedicinesAndAmount> buyerHasMedicinesAndAmount = new ArrayList<>();
+        for(int i = 0; i < buyersHasMedicinesAmount.size(); i++){
+            if(buyersHasMedicinesAmount.get(i).longValue() == maxAmount.longValue()){
+                buyerHasMedicinesAndAmount.add(
+                        new BuyerHasMedicinesAndAmount(
+                                buyersHasMedicines.get(i), buyersHasMedicinesAmount.get(i))
+                );
+            }
+        }
+
+
+        return buyerHasMedicinesAndAmount;
     }
 
     @RequestMapping("/request11_type")
-    List<BuyersHasMedicines> getListOfBuyersThatBuySelectedTypeOfMedicineMostOften(
-            @RequestParam String nameOfType){
+    List<BuyerHasMedicinesAndAmount> getListOfBuyersThatBuySelectedTypeOfMedicineMostOften(
+            @RequestParam Integer id){
         List<BuyersHasMedicines> buyersHasMedicines =
-                buyerHasMedicinesRepository.
-                        getListOfBuyersThatBuySelectedTypeOfMedicineMostOften(nameOfType);
-        for (int i = 1; i < buyersHasMedicines.size(); i++){
-            buyersHasMedicines.remove(i);
+                buyerHasMedicinesRepository.getListOfBuyersThatBuySelectedTypeOfMedicineMostOften(id) ;
+
+        List<Long> buyersHasMedicinesAmount =
+                buyerHasMedicinesRepository.getAmountOfBuyersThatBuySelectedTypeOfMedicineMostOften(id) ;
+        Long maxAmount = Long.valueOf(0);
+        for (Long l : buyersHasMedicinesAmount){
+            if(l > maxAmount){
+                maxAmount = l;
+            }
+        }
+
+        List<BuyerHasMedicinesAndAmount> buyerHasMedicinesAndAmount = new ArrayList<>();
+        for(int i = 0; i < buyersHasMedicinesAmount.size(); i++){
+            if(buyersHasMedicinesAmount.get(i).longValue() == maxAmount.longValue()){
+                buyerHasMedicinesAndAmount.add(
+                        new BuyerHasMedicinesAndAmount(
+                                buyersHasMedicines.get(i), buyersHasMedicinesAmount.get(i))
+                );
+            }
+        }
+
+
+        return buyerHasMedicinesAndAmount;
+    }
+
+    /*****************************************************************************/
+    @RequestMapping("/request12")
+    List<MedicineHasIngredients> getInformationAboutMadeMedicine(
+            @RequestParam Integer id){
+        return medicineRepository.getInformationAboutMadeMedicineHasIngredients(id);
+    }
+    @RequestMapping("/request12_medicine")
+    List<Medicine> getInformationAboutMadeMedicine_Med(
+            @RequestParam Integer id){
+        List<Medicine> medicineList = medicineRepository.getInformationAboutMadeMedicine(id);
+        for (int i = 1; i < medicineList.size(); i++){
+            medicineList.remove(i);
             i--;
         }
-        return buyersHasMedicines;
+        return medicineList;
+    }
+    @RequestMapping("/for_request12")
+    List<Medicine> getListOfMadeMedicine(){
+        return medicineRepository.getListOfMadeMedicine("Рецепт%");
     }
 }

@@ -51,11 +51,21 @@ app.controller("AppCtrl", function($scope, $http){
         var indexOfProductionType = document.getElementById("productionType").selectedIndex;
         var production_type_id = document.getElementById("productionType").options[indexOfProductionType].value;
 
-
-        $http.get('/api/type/medicine/add?id='+id+'&nameOfType='+typeName+'&gen_type_id='
-            +general_type_id+'&production_id='+production_type_id).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(typeName.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/type/medicine/add?id='+id+'&nameOfType='+typeName+'&gen_type_id='
+                +general_type_id+'&production_id='+production_type_id).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idTypeOfMedicine;
@@ -97,12 +107,22 @@ app.controller("AppCtrl", function($scope, $http){
         var indexOfProductionType = document.getElementById("productionTypeUPD").selectedIndex;
         var production_type_id = document.getElementById("productionTypeUPD").options[indexOfProductionType].value;
 
-
-        $http.get('/api/type/medicine/upd?id='+idTypeOfMedicine+'&nameOfType='+typeName
-            +'&gen_type_id='+general_type_id+'&production_id='+production_type_id)
-            .then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(typeName.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/type/medicine/upd?id='+idTypeOfMedicine+'&nameOfType='+typeName
+                +'&gen_type_id='+general_type_id+'&production_id='+production_type_id)
+                .then(function (response){
+                    window.location.reload();
+                });
+        }
+        else window.alert(errorMessage);
     };
 
 

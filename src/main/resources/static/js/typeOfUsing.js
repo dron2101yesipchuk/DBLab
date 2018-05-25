@@ -19,9 +19,20 @@ app.controller("AppCtrl", function($scope, $http){
         var id = document.getElementById("typeOfUsingID").value;
         var name = document.getElementById("typeOfUsingName").value;
 
-        $http.get('/api/type/using/add?id='+id+'&nameOfType='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/type/using/add?id='+id+'&nameOfType='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idTypeOfUsing;
@@ -32,8 +43,19 @@ app.controller("AppCtrl", function($scope, $http){
     this.update_type_of_using = function upd() {
         var name = document.getElementById("typeOfUsingNameUPD").value;
 
-        $http.get('/api/type/using/upd?id='+idTypeOfUsing+'&nameOfType='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/type/using/upd?id='+idTypeOfUsing+'&nameOfType='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 });

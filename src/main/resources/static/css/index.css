@@ -112,6 +112,23 @@ body {
     text-decoration: none;
 }
 
+.button-main{
+    border-radius: 10px;
+    font-family: Georgia;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    border-color: #3c4465;
+    background: #807cd6;
+}
+
+.button-main:hover {
+    border-color: #3c4465;
+    background: #a4a1ff;
+    text-decoration: none;
+}
+
 .btn-warn{
     border-color: #1b71ec;
     background: #2a88fa;
@@ -141,6 +158,14 @@ body {
     background: #807cd6;
     /*background: #fff5d8;*/
     color: #ffffff;
+}
+
+.my-th-main {
+    width:30px;
+    text-align: center;
+    font-size:16px;
+    border: 2px solid #3a3386;
+    background: #ffffff;
 }
 
 .my-th-clicked {

@@ -41,13 +41,41 @@ app.controller("AppCtrl", function($scope, $http){
         var manufactureDate = document.getElementById("manufactureDate").value;
         var expirationTerm = document.getElementById("expirationTerm").value;
 
-
-        $http.get('/api/medicine/add?id='+id+'&nameOfMedicine='+nameOfMedicine
-            +'&type_id='+typeOfMedicineID+'&criticalRate='+criticalRate+'&amount='+amount
-            +'&price='+price+'&manufactureDate='+manufactureDate+'&expirationTerm='+expirationTerm)
-            .then(function (response){
-                window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        var regexInt=/^[0-9]+$/ ;
+        var regexDouble=/^([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
+        if(!regexName.test(nameOfMedicine.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if(!regexInt.test(criticalRate.toString())||!regexInt.test(amount.toString())
+            ||!regexInt.test(expirationTerm.toString())){
+            errorMessage=errorMessage+'-невірний формат цілого числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: ціле число;';
+            isValid=false;
+        }
+        if(!regexDouble.test(price.toString())){
+            errorMessage=errorMessage+'-невірний формат дробового числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: дробове число;';
+            isValid=false;
+        }
+        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        if(!regex.test(manufactureDate.toString())){
+            errorMessage=errorMessage+'-невірний формат дати;\n';
+            errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/medicine/add?id='+id+'&nameOfMedicine='+nameOfMedicine
+                +'&type_id='+typeOfMedicineID+'&criticalRate='+criticalRate+'&amount='+amount
+                +'&price='+price+'&manufactureDate='+manufactureDate+'&expirationTerm='+expirationTerm)
+                .then(function (response){
+                    window.location.reload();
+                });
+        }
     };
 
     var idMedicine;
@@ -85,13 +113,43 @@ app.controller("AppCtrl", function($scope, $http){
         var manufactureDate = document.getElementById("manufactureDateUPD").value;
         var expirationTerm = document.getElementById("expirationTermUPD").value;
 
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        var regexInt=/^[0-9]+$/ ;
+        var regexDouble=/^([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
+        if(!regexName.test(nameOfMedicine.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if(!regexInt.test(criticalRate.toString())||!regexInt.test(amount.toString())
+            ||!regexInt.test(expirationTerm.toString())){
+            errorMessage=errorMessage+'-невірний формат цілого числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: ціле число;';
+            isValid=false;
+        }
+        if(!regexDouble.test(price.toString())){
+            errorMessage=errorMessage+'-невірний формат дробового числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: дробове число;';
+            isValid=false;
+        }
+        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        if(!regex.test(manufactureDate.toString())){
+            errorMessage=errorMessage+'-невірний формат дати;\n';
+            errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/medicine/upd?id='+idMedicine+'&nameOfMedicine='+nameOfMedicine
+                +'&type_id='+typeOfMedicineID+'&criticalRate='+criticalRate+'&amount='+amount
+                +'&price='+price+'&manufactureDate='+manufactureDate+'&expirationTerm='+expirationTerm)
+                .then(function (response){
+                    window.location.reload();
+                });
+        }
+        else window.alert(errorMessage);
 
-        $http.get('/api/medicine/upd?id='+idMedicine+'&nameOfMedicine='+nameOfMedicine
-            +'&type_id='+typeOfMedicineID+'&criticalRate='+criticalRate+'&amount='+amount
-            +'&price='+price+'&manufactureDate='+manufactureDate+'&expirationTerm='+expirationTerm)
-            .then(function (response){
-                window.location.reload();
-        });
     };
 
 

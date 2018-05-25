@@ -8,7 +8,7 @@ app.controller("AppCtrl", function($scope, $http){
         $scope.buyer_has_medicines = response.data;
         console.log(response);
         time = performance.now() - time;
-        window.alert(time);
+        console.log(time);
     });
 
     this.del_buyer_has_medicines = function del(id) {
@@ -74,12 +74,34 @@ app.controller("AppCtrl", function($scope, $http){
         var diagnosis = document.getElementById("diagnosis").value;
         var amount = document.getElementById("amountOfMedicine").value;
 
-
-        $http.get('/api/buyer_has_medicines/add?id='+id+'&buyer_id='+buyer_id+'&medicine_id='
-            +medicine_id+'&dates_id='+dates_id+'&doctorPIB='+doctorPIB+'&diagnosis='+diagnosis+
-            '&amount='+amount).then(function (response){
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        var regexDiagnosis=/^[А-ЯІ][а-яі]+$/
+        var regexAmount = /^[1-9]+$/;
+        if(!regexName.test(doctorPIB.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Прізвище І. Б.;';
+            isValid=false;
+        }
+        if(!regexDiagnosis.test(diagnosis.toString())){
+            errorMessage=errorMessage+'-невірний формат діагнозу;\n';
+            errorMessage=errorMessage+'Потрібний формат: Діагноз;';
+            isValid=false;
+        }
+        if(!regexAmount.test(amount.toString())){
+            errorMessage=errorMessage+'-невірний формат кількості;\n';
+            errorMessage=errorMessage+'Потрібний формат: використовувати лише цифри;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/buyer_has_medicines/add?id='+id+'&buyer_id='+buyer_id+'&medicine_id='
+                +medicine_id+'&dates_id='+dates_id+'&doctorPIB='+doctorPIB+'&diagnosis='+diagnosis+
+                '&amount='+amount).then(function (response){
                 window.location.reload();
-        });
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idBuyersHasMedicines;
@@ -144,11 +166,34 @@ app.controller("AppCtrl", function($scope, $http){
         var diagnosis = document.getElementById("diagnosisUPD").value;
         var amount = document.getElementById("amountOfMedicineUPD").value;
 
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
+        var regexDiagnosis=/^[А-ЯІ][а-яі]+$/
+        var regexAmount = /^[1-9]+$/;
+        if(!regexName.test(doctorPIB.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Прізвище І. Б.;';
+            isValid=false;
+        }
+        if(!regexDiagnosis.test(diagnosis.toString())){
+            errorMessage=errorMessage+'-невірний формат діагнозу;\n';
+            errorMessage=errorMessage+'Потрібний формат: Діагноз;';
+            isValid=false;
+        }
+        if(!regexAmount.test(amount.toString())){
+            errorMessage=errorMessage+'-невірний формат кількості;\n';
+            errorMessage=errorMessage+'Потрібний формат: використовувати лише цифри;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/buyer_has_medicines/upd?id='+idBuyersHasMedicines+'&buyer_id='+buyer_id+'&medicine_id='
+                +medicine_id+'&dates_id='+dates_id+'&doctorPIB='+doctorPIB+'&diagnosis='+diagnosis+
+                '&amount='+amount).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
-        $http.get('/api/buyer_has_medicines/upd?id='+idBuyersHasMedicines+'&buyer_id='+buyer_id+'&medicine_id='
-            +medicine_id+'&dates_id='+dates_id+'&doctorPIB='+doctorPIB+'&diagnosis='+diagnosis+
-            '&amount='+amount).then(function (response){
-            window.location.reload();
-        });
     };
 });

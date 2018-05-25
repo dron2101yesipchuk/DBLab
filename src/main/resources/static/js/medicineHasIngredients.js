@@ -52,11 +52,21 @@ app.controller("AppCtrl", function($scope, $http){
         var ingredient_id = document.getElementById("ingredientId").options[indexOfIngredient].value;
         var ingredientAmount = document.getElementById("ingredientAmount").value;
 
-
-        $http.get('/api/medicine/has_ingredients/add?id='+id+'&med_id='+medicine_id+'&ingredients_id='
-            +ingredient_id+'&ingredientsAmount='+ingredientAmount).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexInt=/^[0-9]+$/ ;
+        if(!regexInt.test(ingredientAmount.toString())){
+            errorMessage=errorMessage+'-невірний формат цілого числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: ціле число;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/medicine/has_ingredients/add?id='+id+'&med_id='+medicine_id+'&ingredients_id='
+                +ingredient_id+'&ingredientsAmount='+ingredientAmount).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idMedicineHasIngredients;
@@ -99,12 +109,22 @@ app.controller("AppCtrl", function($scope, $http){
         var ingredient_id = document.getElementById("ingredientIdUPD").options[indexOfIngredient].value;
         var ingredientAmount = document.getElementById("ingredientAmountUPD").value;
 
-
-        $http.get('/api/medicine/has_ingredients/upd?id='+idMedicineHasIngredients
-            +'&med_id='+medicine_id+'&ingredients_id=' +ingredient_id+'&ingredientsAmount='
-            +ingredientAmount).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexInt=/^[0-9]+$/ ;
+        if(!regexInt.test(ingredientAmount.toString())){
+            errorMessage=errorMessage+'-невірний формат цілого числа;\n';
+            errorMessage=errorMessage+'Потрібний формат: ціле число;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/medicine/has_ingredients/upd?id='+idMedicineHasIngredients
+                +'&med_id='+medicine_id+'&ingredients_id=' +ingredient_id+'&ingredientsAmount='
+                +ingredientAmount).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
 

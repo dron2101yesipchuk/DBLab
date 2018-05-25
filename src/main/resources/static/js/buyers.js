@@ -20,9 +20,27 @@ app.controller("AppCtrl", function($scope, $http){
         var pib = document.getElementById("buyerPIB").value;
         var age = document.getElementById("buyerAge").value;
 
-        $http.get('/api/buyers/add?id='+id+'&PIB='+pib+'&age='+age).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ][а-яі]+\s?[А-ЯІ][а-яі]+$/ ;
+        var regexAge=/^1[6-9]|[2-9][0-9]$/ ;
+        if(!regexName.test(pib.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if(!regexAge.test(age.toString())){
+            errorMessage=errorMessage+'-невірний формат віку;\n';
+            errorMessage=errorMessage+'Потрібний формат: якщо перша цифра 1, то друга від 6 до 9\n' +
+                'якщо перша від двох до 9, друга будь-яка цифра;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/buyers/add?id='+id+'&PIB='+pib+'&age='+age).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
 
     };
 
@@ -37,8 +55,26 @@ app.controller("AppCtrl", function($scope, $http){
         var pib = document.getElementById("buyerPIBUPD").value;
         var age = document.getElementById("buyerAgeUPD").value;
 
-        $http.get('/api/buyers/upd?id='+idBuyer+'&PIB='+pib+'&age='+age).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ][а-яі]+\s?[А-ЯІ][а-яі]+$/ ;
+        var regexAge=/^1[6-9]|[2-9][0-9]$/ ;
+        if(!regexName.test(pib.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if(!regexAge.test(age.toString())){
+            errorMessage=errorMessage+'-невірний формат віку;\n';
+            errorMessage=errorMessage+'Потрібний формат: якщо перша цифра 1, то друга від 6 до 9\n' +
+                'якщо перша від двох до 9, друга будь-яка цифра;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/buyers/upd?id='+idBuyer+'&PIB='+pib+'&age='+age).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 });

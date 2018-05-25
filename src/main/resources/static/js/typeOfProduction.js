@@ -19,9 +19,20 @@ app.controller("AppCtrl", function($scope, $http){
         var id = document.getElementById("typeOfProductionID").value;
         var name = document.getElementById("typeOfProductionName").value;
 
-        $http.get('/api/type/production/add?id='+id+'&nameOfType='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/type/production/add?id='+id+'&nameOfType='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
     };
 
     var idTypeOfProduction;
@@ -32,8 +43,21 @@ app.controller("AppCtrl", function($scope, $http){
     this.update_type_of_production = function upd() {
         var name = document.getElementById("typeOfProductionNameUPD").value;
 
-        $http.get('/api/type/production/upd?id='+idTypeOfProduction+'&nameOfType='+name).then(function (response){
-            window.location.reload();
-        });
+        var isValid=true;
+        var errorMessage='Помилка: неправильні вхідні дані!\n';
+        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+\s[а-яі]+)$/ ;
+        if(!regexName.test(name.toString())){
+            errorMessage=errorMessage+'-невірний формат Імені;\n';
+            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            isValid=false;
+        }
+        if (isValid) {
+            $http.get('/api/type/production/upd?id='+idTypeOfProduction+'&nameOfType='+name).then(function (response){
+                window.location.reload();
+            });
+        }
+        else window.alert(errorMessage);
+
+
     };
 });
