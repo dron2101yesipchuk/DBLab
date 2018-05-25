@@ -66,7 +66,7 @@ app.controller("AppCtrl", function($scope, $http){
         var errorMessage='Помилка: неправильні вхідні дані!\n';
         var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)$/ ;
         var regexInt=/^[0-9]+$/ ;
-        var regexDouble=/^([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
+        var regexDouble=/^([1-9])|([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
         if(!regexName.test(name.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
             errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
