@@ -35,8 +35,10 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idOrderStatus;
-    this.start_update_order_status = function updt(id) {
+    this.start_update_order_status = function updt(id, status) {
         idOrderStatus=id;
+        document.getElementById("orderStatusNameUPD").value = status;
+
     };
 
     this.update_order_status = function upd() {

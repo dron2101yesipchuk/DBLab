@@ -88,7 +88,7 @@
                     <td style="padding-left: 3px">{{item.nameOfGeneralType}}</td>
                     <td><button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
-                                ng-click="ctrl.start_update_general_type(item.id)"
+                                ng-click="ctrl.start_update_general_type(item.id, item.nameOfGeneralType)"
                     >Update</button>
                         <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_general_types(item.id)"
@@ -116,7 +116,6 @@
                     <div class="modal-body">
                         Введіть Id типу
                         <input type="text" id="generalTypeId">
-
                         <br>
                         Введіть назву типу
                         <br>

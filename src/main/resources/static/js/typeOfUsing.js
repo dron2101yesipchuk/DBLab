@@ -36,8 +36,10 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idTypeOfUsing;
-    this.start_update_type_of_using = function updt(id) {
+    this.start_update_type_of_using = function updt(id, type) {
         idTypeOfUsing=id;
+        document.getElementById("typeOfUsingNameUPD").value = type;
+
     };
 
     this.update_type_of_using = function upd() {

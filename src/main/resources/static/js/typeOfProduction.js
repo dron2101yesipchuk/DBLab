@@ -36,8 +36,9 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idTypeOfProduction;
-    this.start_update_type_of_production = function updt(id) {
+    this.start_update_type_of_production = function updt(id, type) {
         idTypeOfProduction=id;
+        document.getElementById("typeOfProductionNameUPD").value = type;
     };
 
     this.update_type_of_production = function upd() {

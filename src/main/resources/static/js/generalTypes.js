@@ -36,8 +36,10 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idGenType;
-    this.start_update_general_type = function updt(id) {
+    this.start_update_general_type = function updt(id, type) {
         idGenType=id;
+        document.getElementById("generalTypeNameUPD").value = type;
+        console.log(id+type);
     };
 
     this.update_general_type = function upd() {
