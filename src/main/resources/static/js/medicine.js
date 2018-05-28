@@ -80,7 +80,7 @@ app.controller("AppCtrl", function($scope, $http){
 
     var idMedicine;
     this.start_update_medicine = function updt(id, name, criticalRate, amount, price,
-                                               manufactureDate, expirationTerm) {
+                                               manufactureDate, expirationTerm, type) {
         idMedicine = id;
         document.getElementById("medicineNameUPD").value = name;
         document.getElementById("criticalRateUPD").value = criticalRate;
@@ -89,6 +89,7 @@ app.controller("AppCtrl", function($scope, $http){
         document.getElementById("manufactureDateUPD").value = manufactureDate;
         document.getElementById("expirationTermUPD").value = expirationTerm;
 
+        var typeId, typeName;
         $http.get('/api/type/medicine').then(function (response){
             var types = response.data;
             var selector = document.getElementById("typeIDUPD");
@@ -98,9 +99,17 @@ app.controller("AppCtrl", function($scope, $http){
                 option.text = types[i].nameOfType;
                 option.value = types[i].id;
                 console.log(option);
+                if(types[i].nameOfType==type)
+                {
+                    typeId = i;
+                    typeName=types[i].nameOfType;
+
+                }
                 selector.add(option);
             }
+            document.getElementById("typeIDUPD").selectedIndex=typeId;
         });
+        document.getElementById("typeIDUPD").value=typeName;
     };
 
     this.update_medicine = function upd() {

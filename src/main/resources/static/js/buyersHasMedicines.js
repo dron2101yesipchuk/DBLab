@@ -105,9 +105,10 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idBuyersHasMedicines;
-    this.start_update_buyer_has_medicines = function updt(id, doctorPIB, diagnosis, amount){
+    this.start_update_buyer_has_medicines = function updt(id, buyerPIB, medicine, dateOfOrdering, dateOfReceiving, orderStatus, doctorPIB, diagnosis, amount){
         idBuyersHasMedicines = id;
 
+        var buyerIndex, medicineIndex, datesIndex, buyerName, medicineName, datesName;
         $http.get('/api/buyers').then(function (response){
             var buyers = response.data;
             var selector = document.getElementById("BuyerIDUPD");
@@ -117,8 +118,15 @@ app.controller("AppCtrl", function($scope, $http){
                 option.text = buyers[i].pib;
                 option.value = buyers[i].id;
                 console.log(option);
+                if(buyers[i].pib==buyerPIB)
+                {
+                    buyerIndex = i;
+                    buyerName=buyers[i].pib;
+
+                }
                 selector.add(option);
             }
+            document.getElementById("BuyerIDUPD").selectedIndex=buyerIndex;
 
 
             $http.get('/api/medicine').then(function (response){
@@ -130,8 +138,15 @@ app.controller("AppCtrl", function($scope, $http){
                     option.text = medicines[i].nameOfMedicine;
                     option.value = medicines[i].id;
                     console.log(option);
+                    if(medicines[i].nameOfMedicine==medicine)
+                    {
+                        medicineIndex = i;
+                        medicineName=medicines[i].nameOfMedicine;
+
+                    }
                     selector.add(option);
                 }
+                document.getElementById("MedicineIDUPD").selectedIndex=medicineIndex;
 
 
                 $http.get('/api/dates').then(function (response){
@@ -144,11 +159,23 @@ app.controller("AppCtrl", function($scope, $http){
                             + dates[i].orderStatus.nameOfStatus;
                         option.value = dates[i].id;
                         console.log(option);
+                        if(dates[i].dateOfOrdering==dateOfOrdering && dates[i].dateOfReceiving==dateOfReceiving
+                            && dates[i].orderStatus.nameOfStatus == orderStatus)
+                        {
+                            datesIndex = i;
+                            datesName=(dates[i].dateOfOrdering + "; " + dates[i].dateOfReceiving + "; "
+                                + dates[i].orderStatus.nameOfStatus);
+
+                        }
                         selector.add(option);
                     }
+                    document.getElementById("DateIDUPD").selectedIndex=datesIndex;
                 });
+                document.getElementById("DateIDUPD").value=buyerName;
             });
+            document.getElementById("MedicineIDUPD").value=medicineName;
         });
+        document.getElementById("BuyerIDUPD").value=datesName;
 
         document.getElementById("doctorPIBUPD").value = doctorPIB;
         document.getElementById("diagnosisUPD").value = diagnosis;

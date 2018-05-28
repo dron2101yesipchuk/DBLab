@@ -94,7 +94,9 @@
                     <td style="padding-left: 3px">{{item.amountOfIngredients}}</td>
                     <td ><button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
-                                ng-click="ctrl.start_update_medicine_has_ingredients(item.id, item.amountOfIngredients)"
+                                ng-click="ctrl.start_update_medicine_has_ingredients(item.id,
+                                item.amountOfIngredients, item.medicine.nameOfMedicine,
+                                item.ingredients.name)"
                     >Update</button>
                         <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_medicine_has_ingredients(item.id)"

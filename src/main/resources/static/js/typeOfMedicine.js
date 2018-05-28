@@ -69,10 +69,11 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idTypeOfMedicine;
-    this.start_update_type_of_medicine = function updt(id, nameOfType) {
+    this.start_update_type_of_medicine = function updt(id, nameOfType, generalType, typeOfProduction) {
         idTypeOfMedicine = id;
         document.getElementById("typeNameUPD").value = nameOfType;
 
+        var generalID, generalName, productionID, productionName;
         $http.get('/api/general_types').then(function (response){
             var types = response.data;
             var selector = document.getElementById("generalTypeUPD");
@@ -82,8 +83,14 @@ app.controller("AppCtrl", function($scope, $http){
                 option.text = types[i].nameOfGeneralType;
                 option.value = types[i].id;
                 console.log(option);
+                if(types[i].nameOfGeneralType==generalType)
+                {
+                    generalID = i;
+                    generalName = types[i].nameOfGeneralType;
+                }
                 selector.add(option);
             }
+            document.getElementById("generalTypeUPD").selectedIndex=generalID;
 
                 $http.get('/api/type/production').then(function (response){
                     var types = response.data;
@@ -94,10 +101,18 @@ app.controller("AppCtrl", function($scope, $http){
                         option.text = types[i].nameOfType;
                         option.value = types[i].id;
                         console.log(option);
+                        if(types[i].nameOfType==typeOfProduction)
+                        {
+                            productionID = i;
+                            productionName = types[i].nameOfType;
+                        }
                         selector.add(option);
                     }
+                    document.getElementById("productionTypeUPD").selectedIndex=productionID;
                 });
+            document.getElementById("productionTypeUPD").value=productionName;
             });
+        document.getElementById("generalTypeUPD").value=generalName;
     };
 
     this.update_type_of_medicine = function upd() {

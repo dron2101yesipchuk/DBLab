@@ -58,10 +58,9 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idUpdate;
-    this.start_update_type_of_medicine_has_type_of_using = function updt(id, type_medicine_id, type_using_id) {
+    this.start_update_type_of_medicine_has_type_of_using = function updt(id, type_medicine, type_using) {
         idUpdate = id;
-        document.getElementById("typeID").options[type_medicine_id].value;
-        document.getElementById("usingID").options[type_using_id].value;
+        var medicineID, usingID, medicineName, usingName;
 
         $http.get('/api/type/medicine').then(function (response){
             var types = response.data;
@@ -72,8 +71,15 @@ app.controller("AppCtrl", function($scope, $http){
                 option.text = types[i].nameOfType;
                 option.value = types[i].id;
                 console.log(option);
+                if(types[i].nameOfType==type_medicine)
+                {
+                    medicineID = i;
+                    medicineName=types[i].nameOfType;
+
+                }
                 selector.add(option);
             }
+            document.getElementById("typeIDUPD").selectedIndex=medicineID;
 
             $http.get('/api/type/using').then(function (response) {
                 var types = response.data;
@@ -84,14 +90,19 @@ app.controller("AppCtrl", function($scope, $http){
                     option.text = types[i].nameOfType;
                     option.value = types[i].id;
                     console.log(option);
+                    if(types[i].nameOfType==type_using)
+                    {
+                        usingID = i;
+                        usingName=types[i].nameOfType;
+
+                    }
                     selector.add(option);
                 }
+                document.getElementById("usingIDUPD").selectedIndex=usingID;
             });
-
-            document.getElementById("SportClubUPD").selectedIndex=thisIndex;
+            document.getElementById("usingIDUPD").value=usingName;
         });
-
-
+        document.getElementById("typeIDUPD").value=medicineName;
     };
 
     this.update_type_of_medicine_has_type_of_using = function upd() {

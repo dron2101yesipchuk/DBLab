@@ -70,10 +70,11 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idMedicineHasIngredients;
-    this.start_update_medicine_has_ingredients = function updt(id, amountOfIngredients) {
+    this.start_update_medicine_has_ingredients = function updt(id, amountOfIngredients, medicine, ingredient) {
         idMedicineHasIngredients = id;
         document.getElementById("ingredientAmountUPD").value = amountOfIngredients;
 
+        var medicineID, medicineName, ingredientID, ingredientName;
         $http.get('/api/medicine').then(function (response){
             var medicines = response.data;
             var selector = document.getElementById("medicineIdUPD");
@@ -83,9 +84,15 @@ app.controller("AppCtrl", function($scope, $http){
                 option.text = medicines[i].nameOfMedicine;
                 option.value = medicines[i].id;
                 console.log(option);
+                if(medicines[i].nameOfMedicine==medicine)
+                {
+                    medicineID = i;
+                    medicineName=medicines[i].nameOfMedicine;
+
+                }
                 selector.add(option);
             }
-
+            document.getElementById("medicineIdUPD").selectedIndex=medicineID;
 
             $http.get('/api/ingredients').then(function (response){
                 var ingredients = response.data;
@@ -96,10 +103,19 @@ app.controller("AppCtrl", function($scope, $http){
                     option.text = ingredients[i].name;
                     option.value = ingredients[i].id;
                     console.log(option);
+                    if(ingredients[i].name==ingredient)
+                    {
+                        ingredientID = i;
+                        ingredientName=ingredients[i].name;
+
+                    }
                     selector.add(option);
                 }
+                document.getElementById("ingredientIdUPD").selectedIndex=ingredientID;
             });
+            document.getElementById("ingredientIdUPD").value=ingredientName;
         });
+        document.getElementById("medicineIdUPD").value=medicineName;
     };
 
     this.update_medicine_has_ingredients = function add() {

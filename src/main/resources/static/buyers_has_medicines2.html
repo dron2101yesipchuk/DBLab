@@ -104,7 +104,11 @@
                     <td style="padding-left: 5px">{{item.amountOfMedicine}}</td>
                     <td ><button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
-                                ng-click="ctrl.start_update_buyer_has_medicines(item.id, item.doctorPIB,
+                                ng-click="ctrl.start_update_buyer_has_medicines(item.id, item.buyer.pib,
+                                item.medicine.nameOfMedicine, item.datesOfOrderingAndReceiving.dateOfOrdering,
+                                item.datesOfOrderingAndReceiving.dateOfReceiving,
+                                item.datesOfOrderingAndReceiving.orderStatus.nameOfStatus,
+                                item.doctorPIB,
                                 item.diagnosis, item.amountOfMedicine)"
                     >Update</button>
                         <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"

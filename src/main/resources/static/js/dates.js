@@ -57,11 +57,12 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idDates;
-    this.start_update_dates = function updt(id, ordering, receiving) {
+    this.start_update_dates = function updt(id, ordering, receiving, orderStatusN) {
         idDates = id;
         document.getElementById("dateOfOrderingUPD").value = ordering;
         document.getElementById("dateOfReceivingUPD").value = receiving;
 
+        var orderStatusID, orderStatusName;
         $http.get('/api/order_status').then(function (response){
             var orderStatus = response.data;
             var selector = document.getElementById("orderStatusIDUPD");
@@ -71,9 +72,17 @@ app.controller("AppCtrl", function($scope, $http){
                 option.text = orderStatus[i].nameOfStatus;
                 option.value = orderStatus[i].id;
                 console.log(option);
+                if(orderStatus[i].nameOfStatus==orderStatusN)
+                {
+                    orderStatusID = i;
+                    orderStatusName=orderStatus[i].nameOfStatus;
+
+                }
                 selector.add(option);
             }
+            document.getElementById("orderStatusIDUPD").selectedIndex=orderStatusID;
         });
+        document.getElementById("orderStatusIDUPD").value=orderStatusName;
     };
 
     this.update_date = function upd() {
