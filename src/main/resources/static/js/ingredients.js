@@ -68,7 +68,7 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^([А-ЯІЄЇ]\s*[а-яієї]*)$/ ;
+        var regexName=/^([А-ЯІЄЇ'][а-яієї']+)|([А-ЯІЄЇ'][а-яієї']+(\s[а-яієї']+)*)$/ ;
         var regexInt=/^[0-9]+$/ ;
         var regexDouble=/^([1-9])|([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
         if(!regexName.test(name.toString())){
