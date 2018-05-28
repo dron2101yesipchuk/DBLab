@@ -62,7 +62,7 @@ app.controller("AppCtrl", function($scope, $http){
             errorMessage=errorMessage+'Потрібний формат: дробове число;';
             isValid=false;
         }
-        var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
+        var regex=/^(20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01])))*$/ ;
         if(!regex.test(manufactureDate.toString())){
             errorMessage=errorMessage+'-невірний формат дати;\n';
             errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
