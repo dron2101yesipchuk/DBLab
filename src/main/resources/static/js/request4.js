@@ -22,7 +22,7 @@ app.controller("AppCtrl", function ($http, $scope){
             isValid=false;
         }
         if (isValid) {
-            $http.get('http://localhost:8080//api/request4?firstDate='+date1+'&secondDate='+date2)
+            $http.get('/api/request4?firstDate='+date1+'&secondDate='+date2)
                 .then(function (response){
                     $scope.request4=response.data;
                     console.log(response);

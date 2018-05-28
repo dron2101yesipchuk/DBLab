@@ -3,7 +3,7 @@ var app = angular.module("demo", [])
 app.controller("AppCtrl", function ($http, $scope){
     $scope.request2_type = [];
     var type_id = 1;
-    $http.get('http://localhost:8080/api/request2_list_selected_type?id='+type_id)
+    $http.get('/api/request2_list_selected_type?id='+type_id)
         .then(function (response){
             $scope.request2_type=response.data;
             console.log(response);
@@ -22,7 +22,7 @@ app.controller("AppCtrl", function ($http, $scope){
 
     $scope.request2_type_amount = 0;
 
-    $http.get('http://localhost:8080/api/request2_amount_selected_type?id='+type_id)
+    $http.get('/api/request2_amount_selected_type?id='+type_id)
         .then(function (response){
         $scope.request2_type_amount = response.data;
         console.log(response);
@@ -33,12 +33,12 @@ app.controller("AppCtrl", function ($http, $scope){
         var index = document.getElementById("TypeOfMedicine").selectedIndex;
         type_id= document.getElementById("TypeOfMedicine").options[index].value;
 
-        $http.get('http://localhost:8080/api/request2_list_selected_type?id='+type_id).then(function (response){
+        $http.get('/api/request2_list_selected_type?id='+type_id).then(function (response){
             $scope.request2_type=response.data;
             console.log(response);
         });
 
-        $http.get('http://localhost:8080/api/request2_amount_selected_type?id='+type_id)
+        $http.get('/api/request2_amount_selected_type?id='+type_id)
             .then(function (response){
                 $scope.request2_type_amount = response.data;
                 console.log(response);

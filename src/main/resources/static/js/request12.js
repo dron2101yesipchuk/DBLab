@@ -3,7 +3,7 @@ var app = angular.module("demo", [])
 app.controller("AppCtrl", function ($http, $scope){
     $scope.request12 = [];
     var medicine_id = 10;
-    $http.get('http://localhost:8080/api/request12?id='+medicine_id)
+    $http.get('/api/request12?id='+medicine_id)
         .then(function (response){
             $scope.request12=response.data;
             console.log(response);
@@ -21,7 +21,7 @@ app.controller("AppCtrl", function ($http, $scope){
         });
 
     $scope.request12_medicine = 0;
-    $http.get('http://localhost:8080/api/request12_medicine?id='+medicine_id)
+    $http.get('/api/request12_medicine?id='+medicine_id)
         .then(function (response){
             $scope.request12_medicine = response.data;
             console.log(response);
@@ -31,12 +31,12 @@ app.controller("AppCtrl", function ($http, $scope){
         var index = document.getElementById("MadeMedicine").selectedIndex;
         medicine_id= document.getElementById("MadeMedicine").options[index].value;
 
-        $http.get('http://localhost:8080/api/request12?id='+medicine_id).then(function (response){
+        $http.get('/api/request12?id='+medicine_id).then(function (response){
             $scope.request12=response.data;
             console.log(response);
         });
 
-        $http.get('http://localhost:8080/api/request12_medicine?id='+medicine_id).then(function (response){
+        $http.get('/api/request12_medicine?id='+medicine_id).then(function (response){
             $scope.request12_medicine=response.data;
             console.log(response);
         });

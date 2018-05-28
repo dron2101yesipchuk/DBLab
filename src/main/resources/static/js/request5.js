@@ -5,7 +5,7 @@ app.controller("AppCtrl", function ($http, $scope){
     var type_id = 1;
     var date1='2017-01-01';
     var date2='2019-01-01';
-    $http.get('http://localhost:8080/api/request5_medicine_type_buyers_list?id='+type_id+'&firstDate='+
+    $http.get('/api/request5_medicine_type_buyers_list?id='+type_id+'&firstDate='+
         date1+'&secondDate='+date2)
         .then(function (response){
             $scope.request5=response.data;
@@ -25,7 +25,7 @@ app.controller("AppCtrl", function ($http, $scope){
 
     $scope.request5_amount = 0;
 
-    $http.get('http://localhost:8080/api/request5_medicine_type_buyers_amount?id='+type_id+'&firstDate='+
+    $http.get('/api/request5_medicine_type_buyers_amount?id='+type_id+'&firstDate='+
         date1+'&secondDate='+date2)
         .then(function (response){
         $scope.request5_amount = response.data;
@@ -48,13 +48,13 @@ app.controller("AppCtrl", function ($http, $scope){
             isValid=false;
         }
         if (isValid) {
-            $http.get('http://localhost:8080/api/request5_medicine_type_buyers_list?id='+type_id+'&firstDate='+
+            $http.get('/api/request5_medicine_type_buyers_list?id='+type_id+'&firstDate='+
                 date1+'&secondDate='+date2).then(function (response){
                 $scope.request5=response.data;
                 console.log(response);
             });
 
-            $http.get('http://localhost:8080/api/request5_medicine_type_buyers_amount?id='+type_id+'&firstDate='+
+            $http.get('/api/request5_medicine_type_buyers_amount?id='+type_id+'&firstDate='+
                 date1+'&secondDate='+date2)
                 .then(function (response){
                     $scope.request5_amount = response.data;

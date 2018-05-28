@@ -3,7 +3,7 @@ var app = angular.module("demo", [])
 app.controller("AppCtrl", function ($http, $scope){
     $scope.request11_medicine = [];
     var medicine_id = 1;
-    $http.get('http://localhost:8080/api/request11_medicine?id='+medicine_id)
+    $http.get('/api/request11_medicine?id='+medicine_id)
         .then(function (response){
             $scope.request11_medicine=response.data;
             console.log(response);
@@ -24,7 +24,7 @@ app.controller("AppCtrl", function ($http, $scope){
         var index = document.getElementById("Medicine").selectedIndex;
         medicine_id= document.getElementById("Medicine").options[index].value;
 
-        $http.get('http://localhost:8080/api/request11_medicine?id='+medicine_id).then(function (response){
+        $http.get('/api/request11_medicine?id='+medicine_id).then(function (response){
             $scope.request11_medicine=response.data;
             console.log(response);
         });
