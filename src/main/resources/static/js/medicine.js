@@ -62,13 +62,14 @@ app.controller("AppCtrl", function($scope, $http){
             errorMessage=errorMessage+'Потрібний формат: дробове число;';
             isValid=false;
         }
-        var regex=/^(20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01])))*$/ ;
+        var regex=/^(20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01])))|0$/;
         if(!regex.test(manufactureDate.toString())){
             errorMessage=errorMessage+'-невірний формат дати;\n';
             errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
             isValid=false;
         }
         if (isValid) {
+            if(manufactureDate==0) manufactureDate=null;
             $http.get('/api/medicine/add?id='+id+'&nameOfMedicine='+nameOfMedicine
                 +'&type_id='+typeOfMedicineID+'&criticalRate='+criticalRate+'&amount='+amount
                 +'&price='+price+'&manufactureDate='+manufactureDate+'&expirationTerm='+expirationTerm)
