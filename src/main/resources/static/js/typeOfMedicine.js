@@ -53,7 +53,7 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^([А-ЯІЄЇ]\s*[а-яієї]*)$/ ;
+        var regexName=/^([А-ЯІЄЇ'][а-яієї']+)|([А-ЯІЄЇ'][а-яієї']+(\s[а-яієї']+)*)$/ ;
         if(!regexName.test(typeName.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
             errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
@@ -124,7 +124,7 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^([А-ЯІЄЇ]\s*[а-яієї]*)$/ ;
+        var regexName=/^([А-ЯІЄЇ'][а-яієї']+)|([А-ЯІЄЇ'][а-яієї']+(\s[а-яієї']+)*)$/ ;
         if(!regexName.test(typeName.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
             errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
