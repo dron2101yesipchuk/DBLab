@@ -87,7 +87,7 @@ app.controller("AppCtrl", function($scope, $http){
         var regex=/^20[0-9][0-9]-((0[1-9])|(1[0-2]))-((0[1-9])|([12][0-9])|(3[01]))$/ ;
         if(!regex.test(dateOfOrdering.toString())||!regex.test(dateOfReceiving.toString())){
             errorMessage=errorMessage+'-невірний формат дати;\n';
-            errorMessage=errorMessage+'Потріббний формат yyyy-mm-dd (рік-місяць-день);';
+            errorMessage=errorMessage+'Потрібний формат yyyy-mm-dd (рік-місяць-день);';
             isValid=false;
         }
         if (isValid) {

@@ -22,11 +22,11 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ][а-яі]+\s?[А-ЯІ][а-яі]+$/ ;
+        var regexName=/^[А-ЯІЄЇ][а-яієї']+\s[А-ЯІЄЇ][а-яієї']+\s?[А-ЯІЄЇ'][а-яієї']+$/ ;
         var regexAge=/^1[6-9]|[2-9][0-9]$/ ;
         if(!regexName.test(pib.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
-            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            errorMessage=errorMessage+'Потрібний формат Прізвище Ім\'я По-Батькові;\n';
             isValid=false;
         }
         if(!regexAge.test(age.toString())){
@@ -57,11 +57,11 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^[А-ЯІЄ][а-яіє]+\s[А-ЯІЄ][а-яіє]+\s?[А-ЯІЄ][а-яіє]+$/ ;
+        var regexName=/^[А-ЯІЄЇ][а-яієї']+\s[А-ЯІЄЇ][а-яієї']+\s?[А-ЯІЄЇ'][а-яієї']+$/ ;
         var regexAge=/^1[6-9]|[2-9][0-9]$/ ;
         if(!regexName.test(pib.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
-            errorMessage=errorMessage+'Потрібний формат Перша буква з великої, далі малі, кирилицею;';
+            errorMessage=errorMessage+'Потрібний формат Прізвище Ім\'я По-Батькові;\n';
             isValid=false;
         }
         if(!regexAge.test(age.toString())){

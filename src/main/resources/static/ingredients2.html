@@ -96,7 +96,7 @@
                     <td>
                         <button type="button" class="btn btn-warn" style="padding: 0px; height: 20px; width: 40px;"
                                 data-toggle="modal" data-target="#updateModal"
-                                ng-click="ctrl.start_update_ingredients(item.id)"
+                                ng-click="ctrl.start_update_ingredients(item.id, item.name, item.criticalRate, item.amount, item.price)"
                     >Update</button>
                         <button type="button" class="btn btn-dang" style="padding: 0px; height: 20px; width: 40px;"
                                 ng-click="ctrl.del_ingredients(item.id)"

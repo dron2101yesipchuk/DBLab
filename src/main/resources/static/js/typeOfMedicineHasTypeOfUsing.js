@@ -58,8 +58,10 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idUpdate;
-    this.start_update_type_of_medicine_has_type_of_using = function updt(id) {
+    this.start_update_type_of_medicine_has_type_of_using = function updt(id, type_medicine_id, type_using_id) {
         idUpdate = id;
+        document.getElementById("typeID").options[type_medicine_id].value;
+        document.getElementById("usingID").options[type_using_id].value;
 
         $http.get('/api/type/medicine').then(function (response){
             var types = response.data;
@@ -85,7 +87,11 @@ app.controller("AppCtrl", function($scope, $http){
                     selector.add(option);
                 }
             });
+
+            document.getElementById("SportClubUPD").selectedIndex=thisIndex;
         });
+
+
     };
 
     this.update_type_of_medicine_has_type_of_using = function upd() {

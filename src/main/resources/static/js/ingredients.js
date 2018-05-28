@@ -24,7 +24,7 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)$/ ;
+        var regexName=/^([А-ЯІЄЇ]\s*[а-яієї]*)$/ ;
         var regexInt=/^[0-9]+$/ ;
         var regexDouble=/^([1-9])|([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
         if(!regexName.test(name.toString())){
@@ -52,8 +52,12 @@ app.controller("AppCtrl", function($scope, $http){
     };
 
     var idIngredients;
-    this.start_update_ingredients = function updt(id) {
+    this.start_update_ingredients = function updt(id, ingredientsNameUPD, ingredientsCriticalRateUPD, ingredientsAmountUPD, ingredientsPriceUPD) {
         idIngredients=id;
+        document.getElementById("ingredientsNameUPD").value = ingredientsNameUPD;
+        document.getElementById("ingredientsCriticalRateUPD").value = ingredientsCriticalRateUPD;
+        document.getElementById("ingredientsAmountUPD").value = ingredientsAmountUPD;
+        document.getElementById("ingredientsPriceUPD").value = ingredientsPriceUPD;
     };
 
     this.update_ingredients = function upd() {
@@ -64,7 +68,7 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^([А-ЯІ][а-яі]+)|([А-ЯІ][а-яі]+\s[а-яі]+)$/ ;
+        var regexName=/^([А-ЯІЄЇ]\s*[а-яієї]*)$/ ;
         var regexInt=/^[0-9]+$/ ;
         var regexDouble=/^([1-9])|([1-9][0-9]+)|([1-9][0-9]+\.[0-9]+)$/ ;
         if(!regexName.test(name.toString())){

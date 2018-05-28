@@ -76,17 +76,17 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
-        var regexDiagnosis=/^[А-ЯІ][а-яі]+$/
+        var regexName=/^([А-ЯІЄЇ][а-яієї]+\s[А-ЯІЄЇ]\.\s?[А-ЯІЄЇ]\.)*$/ ;
+        var regexDiagnosis=/^[А-ЯІ]*[а-яі]*$/;
         var regexAmount = /^[1-9]+$/;
         if(!regexName.test(doctorPIB.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
-            errorMessage=errorMessage+'Потрібний формат Прізвище І. Б.;';
+            errorMessage=errorMessage+'Потрібний формат Прізвище І. Б.;\n';
             isValid=false;
         }
         if(!regexDiagnosis.test(diagnosis.toString())){
             errorMessage=errorMessage+'-невірний формат діагнозу;\n';
-            errorMessage=errorMessage+'Потрібний формат: Діагноз;';
+            errorMessage=errorMessage+'Потрібний формат: Діагноз;\n';
             isValid=false;
         }
         if(!regexAmount.test(amount.toString())){
@@ -168,8 +168,8 @@ app.controller("AppCtrl", function($scope, $http){
 
         var isValid=true;
         var errorMessage='Помилка: неправильні вхідні дані!\n';
-        var regexName=/^[А-ЯІ][а-яі]+\s[А-ЯІ]\.\s?[А-ЯІ]\.$/ ;
-        var regexDiagnosis=/^[А-ЯІ][а-яі]+$/
+        var regexName=/^([А-ЯІЄЇ][а-яієї]+\s[А-ЯІЄЇ]\.\s?[А-ЯІЄЇ]\.)*$/ ;
+        var regexDiagnosis=/^[А-ЯІ]*[а-яі]*$/;
         var regexAmount = /^[1-9]+$/;
         if(!regexName.test(doctorPIB.toString())){
             errorMessage=errorMessage+'-невірний формат Імені;\n';
