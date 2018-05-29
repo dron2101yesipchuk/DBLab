@@ -81,7 +81,7 @@ public class RequestController {
     }
 
     @RequestMapping("/request3_type")
-    List<BuyerHasMedicinesAndAmount> getTheMostPopularMedicinesOfSelectedType(@RequestParam Integer id){
+    List<BuyerHasMedicinesAndAmount> getTheMostPopularMedicinesOfSelectedType(@RequestParam("id") Integer id){
         List<BuyersHasMedicines> allMostPopularMedicines =
                 buyerHasMedicinesRepository.getTheMostPopularMedicinesOfSelectedType(id);
 
