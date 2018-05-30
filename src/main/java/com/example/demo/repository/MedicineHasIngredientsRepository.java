@@ -10,21 +10,21 @@ import java.sql.Date;
 import java.util.List;
 
 public interface MedicineHasIngredientsRepository extends JpaRepository<MedicineHasIngredients, Integer> {
-    @Query("select m " +
+    @Query("select distinct m " +
             "from MedicineHasIngredients m " +
             "join BuyersHasMedicines b ON m.medicine.id = b.medicine.id " +
             "where b.datesOfOrderingAndReceiving.dateOfOrdering " +
-            "between :firstDate and :secondDate " +
-            "group by m.ingredients.id")
+            "between :firstDate and :secondDate " /*+
+            "group by m.ingredients.id"*/)
     List<MedicineHasIngredients> getIngredientsBetweenSelectedDates(
             @Param("firstDate")Date firstDate, @Param("secondDate")Date secondDate
     );
-    @Query("select sum(m.amountOfIngredients*b.amountOfMedicine) " +
+    @Query("select distinct sum(m.amountOfIngredients*b.amountOfMedicine) " +
             "from MedicineHasIngredients m " +
             "join BuyersHasMedicines b ON m.medicine.id = b.medicine.id " +
             "where b.datesOfOrderingAndReceiving.dateOfOrdering " +
-            "between :firstDate and :secondDate " +
-            "group by m.ingredients.id")
+            "between :firstDate and :secondDate "/* +
+            "group by m.ingredients.id"*/)
     List<Long> getVolumeOfIngredientsBetweenSelectedDates(
             @Param("firstDate")Date firstDate, @Param("secondDate")Date secondDate
     );
